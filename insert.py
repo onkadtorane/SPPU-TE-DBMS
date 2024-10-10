@@ -1,11 +1,10 @@
-import pymongo
-if __name__ == "__main__":
-    print("Welcome to pyMongo")
-    client = pymongo.MongoClient("mongodb://127.0.0.1:27017/")
-    print(client)
-    db = client['Onkar']
-    collection = db['Student']
-    dictionary2 = {'Roll_no':24, 'Name':'Sid', 'Address':'Junnar'}
-    collection.insert_one(dictionary2)
-    allthese = [{'Roll_no':52, 'Name':'Suraj', 'Address':'Siddhatek'},{'roll_no':54, 'Name':'Onkar', 'Address':'Akluj'}]
-    collection.insert_many(allthese)
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+cursor=con.cursor()
+Roll_no =int(input("Enter Student Rollno :"))
+Name = input("Enter Student Name :")
+Mark = int(input("Enter Student Marks :"))
+query = " insert into Student values({}, '{}', {}) ".format(Roll_no, Name, Mark)
+cursor.execute(query)
+con.commit()
+print("Data inserted successfully")

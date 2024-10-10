@@ -1,13 +1,9 @@
-import pymongo
-if __name__ == "__main__":
-    print("Welcome to pyMongo")
-    client = pymongo.MongoClient("mongodb://127.0.0.1:27017/")
-    print(client)
-    db = client['Onkar']
-    collection = db['Student']
-    refield = {'Name':'Sid'}
-    setfield = {'$set':{'Address':'Shivneri'}}
-    collection.update_one(refield, setfield)
-    refield = {'Name':'Onkar'}
-    setfield = {'$set':{'Address':'Sadashivnagar'}}
-    collection.update_many(refield, setfield)
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+cursor = con.cursor()
+Mark = int(input(" Enter updated Marks :"))
+Roll_no =int(input(" Enter Student Rollno :"))
+query = 'update Student set Mark = {} where Roll_no = {}'.format(Mark, Roll_no)
+cursor.execute(query)
+con.commit()
+print("Successfully Updated Mark")

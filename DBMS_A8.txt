@@ -1,0 +1,144 @@
+mysql> Create database Onkar;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use Onkar
+Database changed
+
+mysql> create table Student(Roll_no int, Name varchar(20), Mark int(5));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+//Connect
+Code:
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+if con.is_connected():
+    print('mysql successfully connected')
+else:
+    print('some connectivity issue')
+
+Output:
+PS E:\TE\DBMS\Practicals\DBMS_A8> python connect.py
+mysql successfully connected
+
+//Insert
+Code:
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+cursor=con.cursor()
+Roll_no =int(input("Enter Student Rollno :"))
+Name = input("Enter Student Name :")
+Mark = int(input("Enter Student Marks :"))
+query = " insert into Student values({}, '{}', {}) ".format(Roll_no, Name, Mark)
+cursor.execute(query)
+con.commit()
+print("Data inserted successfully")
+
+Output:
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py 
+Enter Student Rollno :1
+Enter Student Name :Aditya
+Enter Student Marks :25
+Data inserted successfully
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py
+Enter Student Rollno :24
+Enter Student Name :Sid
+Enter Student Marks :28
+Data inserted successfully
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py
+Enter Student Rollno :52
+Enter Student Name :Suraj
+Enter Student Marks :17
+Data inserted successfully
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py
+Enter Student Rollno :54
+Enter Student Name :Onkar
+Enter Student Marks :13
+Data inserted successfully
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py
+Enter Student Rollno :65
+Enter Student Name :Ashok
+Enter Student Marks :19
+Data inserted successfully
+PS E:\TE\DBMS\Practicals\DBMS_A8> python insert.py
+Enter Student Rollno :67
+Enter Student Name :Pratik
+Enter Student Marks :23
+Data inserted successfully
+
+MySQL Output:
+mysql> select * from Student;
++---------+--------+------+
+| Roll_no | Name   | Mark |
++---------+--------+------+
+|       1 | Aditya |   25 |
+|      24 | Sid    |   28 |
+|      52 | Suraj  |   17 |
+|      54 | Onkar  |   13 |
+|      65 | Ashok  |   19 |
+|      67 | Pratik |   23 |
++---------+--------+------+
+6 rows in set (0.00 sec)
+
+//Update
+Code:
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+cursor = con.cursor()
+Mark = int(input(" Enter updated Marks :"))
+Roll_no =int(input(" Enter Student Rollno :"))
+query = 'update Student set Mark = {} where Roll_no = {}'.format(Mark, Roll_no)
+cursor.execute(query)
+con.commit()
+print("Successfully Updated Mark")
+
+Output:
+PS E:\TE\DBMS\Practicals\DBMS_A8> python update.py
+ Enter updated Marks :15
+ Enter Student Rollno :54
+Successfully Updated Mark
+
+MySQL Output:
+mysql> select * from Student;
++---------+--------+------+
+| Roll_no | Name   | Mark |
++---------+--------+------+
+|       1 | Aditya |   25 |
+|      24 | Sid    |   28 |
+|      52 | Suraj  |   17 |
+|      54 | Onkar  |   15 |
+|      65 | Ashok  |   19 |
+|      67 | Pratik |   23 |
++---------+--------+------+
+6 rows in set (0.00 sec)
+
+//Delete
+Code:
+import mysql.connector as c
+con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+
+cursor = con.cursor()
+Roll_no = int(input("Enter Student Rollno :"))
+query = 'delete from Student where Roll_no = {}'.format(Roll_no)
+cursor.execute(query)
+con.commit()
+print("Successfully Delete Data")
+
+Output:
+PS E:\TE\DBMS\Practicals\DBMS_A8> python delete.py
+Enter Student Rollno :67
+Successfully Delete Data
+PS E:\TE\DBMS\Practicals\DBMS_A8> python delete.py
+Enter Student Rollno :24
+Successfully Delete Data
+
+MySQL Output:
+mysql> select * from Student;
++---------+--------+------+
+| Roll_no | Name   | Mark |
++---------+--------+------+
+|       1 | Aditya |   25 |
+|      52 | Suraj  |   17 |
+|      54 | Onkar  |   15 |
+|      65 | Ashok  |   19 |
++---------+--------+------+
+4 rows in set (0.00 sec)
