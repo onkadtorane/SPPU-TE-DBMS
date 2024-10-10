@@ -1,0 +1,398 @@
+test> use Onkar
+switched to db Onkar
+Onkar> db.createCollection("Student")
+{ ok: 1 }
+Onkar> db.Student.insertMany([{Rollno:1,Name:"Aditya",Address:"Pune"},{Rollno:52,Name:"Suraj",Address:"Siddhatek"},{Rollno:54,Name:"Onkar",Address:"Phaltan"},{Rollno:65,Name:"Ashok",Address:"Paranda"},{Rollno:67,Name:"Pratik",Address:"Parbhani"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f2bc327089aa95b0c73bf8'),
+    '1': ObjectId('66f2bc327089aa95b0c73bf9'),
+    '2': ObjectId('66f2bc327089aa95b0c73bfa'),
+    '3': ObjectId('66f2bc327089aa95b0c73bfb'),
+    '4': ObjectId('66f2bc327089aa95b0c73bfc')
+  }
+}
+Onkar> db.Student.find()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfa'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.remove({Rollno:54})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+Onkar> db.Student.find().pretty()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.insert({Rollno:54,Name:"Onkar",Address:"Phaltan"})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f2bd977089aa95b0c73bfd') }
+}
+Onkar> db.Student.find().sort({Rollno:1})
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.find().sort({Rollno:-1})
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  }
+]
+Onkar> db.Student.find({$and:[{"Rollno":1},{"Name":"Aditya"}]}).pretty()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  }
+]
+Onkar> db.Student.find({$or:[{"Rollno":1},{"Name":"Onkar"}]}).pretty()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  }
+]
+Onkar> db.Student.find({"Rollno":{$gt:50}}).sort({Rollno:1})
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.find({$nor:[{"Rollno":1},{"Name":"Onkar"}]}).pretty()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.update({"Address":"Phaltan"},{$set:{"Address":"Akluj"}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Onkar> db.Student.find().sort({Rollno:1})
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Akluj'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.replaceOne({},{"Rollno":24,Name:"Sid",Address:"Junnar"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Onkar> db.Student.find()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 24,
+    Name: 'Sid',
+    Address: 'Junnar'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Akluj'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]
+Onkar> db.Student.replaceOne({Rollno:54},{"Rollno":24,Name:"Sid",Address:"Junnar"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Onkar> db.Student.find()
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 24,
+    Name: 'Sid',
+    Address: 'Junnar'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 24,
+    Name: 'Sid',
+    Address: 'Junnar'
+  }
+]
+Onkar> db.Student.replaceOne({},{"Rollno":1,Name:"Aditya",Address:"Pune"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Onkar> db.Student.insertOne({Rollno:54,Name:"Onkar",Address:"Phaltan"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('66f2c38c7089aa95b0c73bfe')
+}
+Onkar> db.Student.find().sort({Rollno:1})
+[
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf8'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Address: 'Pune'
+  },
+  {
+    _id: ObjectId('66f2bd977089aa95b0c73bfd'),
+    Rollno: 24,
+    Name: 'Sid',
+    Address: 'Junnar'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bf9'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Address: 'Siddhatek'
+  },
+  {
+    _id: ObjectId('66f2c38c7089aa95b0c73bfe'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Address: 'Phaltan'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfb'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Address: 'Paranda'
+  },
+  {
+    _id: ObjectId('66f2bc327089aa95b0c73bfc'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Address: 'Parbhani'
+  }
+]

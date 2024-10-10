@@ -1,0 +1,169 @@
+test> use Onkar
+switched to db Onkar
+Onkar> db.createCollection("TE")
+{ ok: 1 }
+Onkar> db.TE.insertMany([{Rollno:1,Name:"Aditya",Fee:105000},{Rollno:24,Name:"Sid",Fee:13290},{Rollno:52,Name:"Suraj",Fee:107000},{Rollno:54,Name:"Onkar",Fee:190},{Rollno:65,Name:"Ashok",Fee:13390},{Rollno:67,Name:"Pratik",Fee:59000},{Rollno:1,Name:"Aditya",Fee:1050},{Rollno:54,Name:"Onkar",Fee:19000}]) 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f263b173d0918db9964048'),
+    '1': ObjectId('66f263b173d0918db9964049'),
+    '2': ObjectId('66f263b173d0918db996404a'),
+    '3': ObjectId('66f263b173d0918db996404b'),
+    '4': ObjectId('66f263b173d0918db996404c'),
+    '5': ObjectId('66f263b173d0918db996404d'),
+    '6': ObjectId('66f263b173d0918db996404e'),
+    '7': ObjectId('66f263b173d0918db996404f')
+  }
+}
+Onkar> db.TE.find()
+[
+  {
+    _id: ObjectId('66f263b173d0918db9964048'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Fee: 105000
+  },
+  {
+    _id: ObjectId('66f263b173d0918db9964049'),
+    Rollno: 24,
+    Name: 'Sid',
+    Fee: 13290
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404a'),
+    Rollno: 52,
+    Name: 'Suraj',
+    Fee: 107000
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404b'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Fee: 190
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404c'),
+    Rollno: 65,
+    Name: 'Ashok',
+    Fee: 13390
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404d'),
+    Rollno: 67,
+    Name: 'Pratik',
+    Fee: 59000
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404e'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Fee: 1050
+  },
+  {
+    _id: ObjectId('66f263b173d0918db996404f'),
+    Rollno: 54,
+    Name: 'Onkar',
+    Fee: 19000
+  }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$sum:"Fee"}}})
+[
+  { _id: 'Aditya', total: 0 },
+  { _id: 'Sid', total: 0 },
+  { _id: 'Onkar', total: 0 },
+  { _id: 'Ashok', total: 0 },
+  { _id: 'Pratik', total: 0 },
+  { _id: 'Suraj', total: 0 }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$avg:"Fee"}}})
+[
+  { _id: 'Suraj', total: null },
+  { _id: 'Aditya', total: null },
+  { _id: 'Onkar', total: null },
+  { _id: 'Ashok', total: null },
+  { _id: 'Pratik', total: null },
+  { _id: 'Sid', total: null }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$min:"Fee"}}})
+[
+  { _id: 'Aditya', total: 'Fee' },
+  { _id: 'Sid', total: 'Fee' },
+  { _id: 'Onkar', total: 'Fee' },
+  { _id: 'Ashok', total: 'Fee' },
+  { _id: 'Pratik', total: 'Fee' },
+  { _id: 'Suraj', total: 'Fee' }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$max:"Fee"}}})
+[
+  { _id: 'Aditya', total: 'Fee' },
+  { _id: 'Sid', total: 'Fee' },
+  { _id: 'Onkar', total: 'Fee' },
+  { _id: 'Ashok', total: 'Fee' },
+  { _id: 'Pratik', total: 'Fee' },
+  { _id: 'Suraj', total: 'Fee' }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$first:"Fee"}}})
+[
+  { _id: 'Aditya', total: 'Fee' },
+  { _id: 'Sid', total: 'Fee' },
+  { _id: 'Onkar', total: 'Fee' },
+  { _id: 'Ashok', total: 'Fee' },
+  { _id: 'Pratik', total: 'Fee' },
+  { _id: 'Suraj', total: 'Fee' }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$last:"Fee"}}})
+[
+  { _id: 'Pratik', total: 'Fee' },
+  { _id: 'Suraj', total: 'Fee' },
+  { _id: 'Sid', total: 'Fee' },
+  { _id: 'Aditya', total: 'Fee' },
+  { _id: 'Onkar', total: 'Fee' },
+  { _id: 'Ashok', total: 'Fee' }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$sum:1}}})
+[
+  { _id: 'Suraj', total: 1 },
+  { _id: 'Aditya', total: 2 },
+  { _id: 'Onkar', total: 2 },
+  { _id: 'Ashok', total: 1 },
+  { _id: 'Pratik', total: 1 },
+  { _id: 'Sid', total: 1 }
+]
+Onkar> db.TE.aggregate({$group:{_id:"$Name","total":{$addToSet:"$Fee"}}})
+[
+  { _id: 'Aditya', total: [ 1050, 105000 ] },
+  { _id: 'Sid', total: [ 13290 ] },
+  { _id: 'Onkar', total: [ 19000, 190 ] },
+  { _id: 'Ashok', total: [ 13390 ] },
+  { _id: 'Pratik', total: [ 59000 ] },
+  { _id: 'Suraj', total: [ 107000 ] }
+]
+Onkar> db.TE.createIndex({'Rollno':1})
+Rollno_1
+Onkar> db.TE.createIndex({'Rollno':52})
+Rollno_52
+Onkar> db.TE.createIndex({'Rollno':54})
+Rollno_54
+Onkar> db.TE.createIndex({'Rollno':65})
+Rollno_65
+Onkar> db.TE.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { Rollno: 1 }, name: 'Rollno_1' },
+  { v: 2, key: { Rollno: 52 }, name: 'Rollno_52' },
+  { v: 2, key: { Rollno: 54 }, name: 'Rollno_54' },
+  { v: 2, key: { Rollno: 65 }, name: 'Rollno_65' }
+]
+Onkar> db.TE.dropIndex({'Rollno':54})
+{ nIndexesWas: 5, ok: 1 }
+Onkar> db.TE.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { Rollno: 1 }, name: 'Rollno_1' },
+  { v: 2, key: { Rollno: 52 }, name: 'Rollno_52' },
+  { v: 2, key: { Rollno: 65 }, name: 'Rollno_65' }
+]
+Onkar> 
+
+

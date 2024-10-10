@@ -1,0 +1,65 @@
+test> use Onkar
+switched to db Onkar
+Onkar> db.createCollection("Insem_data")
+{ ok: 1 }
+Onkar> db.Insem_data.insertMany([{Rollno:1,Name:"Aditya",Sub:"DBMS",Mark:22,Status:"A"},{Rollno:2,Name:"Aditya",Sub:"TOC",Mark:28,Status:"A"},{Rollno:50,Name:"Dhanshree",Sub:"DBMS",Mark:24,Status:"B"},{Rollno:50,Name:"Dhanshree",Sub:"TOC",Mark:26,Status:"A"},{Rollno:67,Name:"Meghraj",Sub:"CNS",Mark:25,Status:"B"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f2603673d0918db9964043'),
+    '1': ObjectId('66f2603673d0918db9964044'),
+    '2': ObjectId('66f2603673d0918db9964045'),
+    '3': ObjectId('66f2603673d0918db9964046'),
+    '4': ObjectId('66f2603673d0918db9964047')
+  }
+}
+Onkar> db.Insem_data.find()
+[
+  {
+    _id: ObjectId('66f2603673d0918db9964043'),
+    Rollno: 1,
+    Name: 'Aditya',
+    Sub: 'DBMS',
+    Mark: 22,
+    Status: 'A'
+  },
+  {
+    _id: ObjectId('66f2603673d0918db9964044'),
+    Rollno: 2,
+    Name: 'Aditya',
+    Sub: 'TOC',
+    Mark: 28,
+    Status: 'A'
+  },
+  {
+    _id: ObjectId('66f2603673d0918db9964045'),
+    Rollno: 50,
+    Name: 'Dhanshree',
+    Sub: 'DBMS',
+    Mark: 24,
+    Status: 'B'
+  },
+  {
+    _id: ObjectId('66f2603673d0918db9964046'),
+    Rollno: 50,
+    Name: 'Dhanshree',
+    Sub: 'TOC',
+    Mark: 26,
+    Status: 'A'
+  },
+  {
+    _id: ObjectId('66f2603673d0918db9964047'),
+    Rollno: 67,
+    Name: 'Meghraj',
+    Sub: 'CNS',
+    Mark: 25,
+    Status: 'B'
+  }
+]
+Onkar> db.Insem_data.mapReduce(function(){emit(this.Sub,this.Mark)},function(Sub,Mark){return Array.sum(Mark);},{query:{Status:"A"},out:"insem"});
+{ result: 'insem', ok: 1 }
+Onkar> db.insem.find()
+[ { _id: 'TOC', value: 54 }, { _id: 'DBMS', value: 22 } ]
+Onkar> 
+
+
