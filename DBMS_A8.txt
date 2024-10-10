@@ -10,7 +10,7 @@ Query OK, 0 rows affected, 1 warning (0.02 sec)
 //Connect
 Code:
 import mysql.connector as c
-con = c.connect(host = 'localhost', user = 'root', password = '914206', database = 'Onkar')
+con = c.connect(host = 'localhost', user = 'root', password = '', database = 'Onkar')
 if con.is_connected():
     print('mysql successfully connected')
 else:
