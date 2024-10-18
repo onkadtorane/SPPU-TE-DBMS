@@ -1,5 +1,5 @@
 import mysql.connector as c
-con = c.connect(host = 'localhost', user = 'Your_username', password = 'ypur_password', database = 'your_database')
+con = c.connect(host = 'localhost', user = 'Your_username', password = 'your_password', database = 'your_database')
 if con.is_connected():
     print('mysql successfully connected Now, You Can Perform verious opration:')
 else:
@@ -13,7 +13,7 @@ while flag == True:
     a = int(input("1) Insert\n2) Update\n3) Delete\n4) Exit\nPlease Select Above Options:"))
     if a == 1:
         while flag1 == True:
-            cursor=con.cursor('Employee')
+            cursor=con.cursor('Employee') #you can give your name of table instead of Employee
             eid =int(input(" Enter Employee id: "))
             name = input(" Enter Employee Name: ")
             salary = int(input(" Enter Employee salary: "))
